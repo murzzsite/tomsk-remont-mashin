@@ -1,0 +1,51 @@
+/* motion-kit: токены и стили эффектов. Светлая тема. Цвета переопределять под бренд клиента. */
+:root{
+  /* пружины: "stiffness damping" (из designbookmark motion studies) */
+  --spring-follow:900 50;
+  --spring-settle:280 22;
+  --spring-soft:260 24;
+  --spring-lead:620 36;
+  --spring-trail:190 19;
+  --spring-pop:520 16;
+  --spring-fade:420 32;
+  --stagger:45;               /* мс между элементами */
+
+  /* бренд: менять под клиента */
+  --mk-bg:#fafaf7;
+  --mk-surface:#fff;
+  --mk-text:#16181d;
+  --mk-muted:#6b7280;
+  --mk-accent:#e4572e;
+  --mk-on-accent:#fff;
+  --mk-fill:rgba(22,24,29,.06);
+
+  --mk-r-pill:999px;
+  --mk-r-card:24px;
+  --mk-ease-out:cubic-bezier(.22,1,.36,1);   /* для CSS-переходов, где пружина избыточна */
+}
+
+/* reveal: класс mk-reveal ставит JS, без JS элементы видны */
+.mk-on .mk-reveal{opacity:0;transform:translate3d(0,22px,0);transition:opacity .7s var(--mk-ease-out),transform .8s var(--mk-ease-out);transition-delay:var(--d,0ms)}
+.mk-on .mk-reveal.mk-in{opacity:1;transform:none}
+
+/* magnetic: будем двигать только transform */
+[data-magnetic]{will-change:transform}
+
+/* roll: две копии буквы, верхняя уезжает, нижняя заезжает */
+.mk-roll{display:inline-flex;overflow:hidden;line-height:1.15;vertical-align:bottom}
+.mk-roll__c{display:inline-block;position:relative;height:1.15em;overflow:hidden}
+.mk-roll__c>span{display:block;transition:transform .5s var(--mk-ease-out);transition-delay:calc(var(--i)*14ms)}
+.mk-roll__c>span+span{position:absolute;inset:0;transform:translateY(110%)}
+.mk-roll:hover .mk-roll__c>span:first-child,.mk-roll:focus-visible .mk-roll__c>span:first-child{transform:translateY(-110%)}
+.mk-roll:hover .mk-roll__c>span+span,.mk-roll:focus-visible .mk-roll__c>span+span{transform:none}
+
+/* pill: резиновый хайлайт */
+.mk-pill{position:relative;display:inline-flex;gap:2px;padding:4px;border-radius:var(--mk-r-pill);background:var(--mk-fill)}
+.mk-pill__hl{position:absolute;top:4px;bottom:4px;left:0;border-radius:var(--mk-r-pill);background:var(--mk-surface);box-shadow:0 1px 3px rgba(22,24,29,.12);pointer-events:none;will-change:transform,width}
+.mk-pill [data-pill-item]{position:relative;z-index:1;padding:9px 18px;border:0;background:none;border-radius:var(--mk-r-pill);font:inherit;font-weight:500;color:var(--mk-muted);cursor:pointer;transition:color .2s}
+.mk-pill [data-pill-item].is-active{color:var(--mk-text)}
+
+@media (prefers-reduced-motion:reduce){
+  .mk-on .mk-reveal{opacity:1;transform:none;transition:none}
+  .mk-roll__c>span{transition:none}
+}
