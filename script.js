@@ -121,8 +121,8 @@ const LEAD_ENDPOINT = 'https://lead-relay.leestygpt.workers.dev/lead/H6CECL5EM7'
     const opt = sel.options[sel.selectedIndex];
     const price = opt?.dataset.price;
     totalEl.innerHTML = price
-      ? `Со скидкой 20%: <strong>${price}</strong>`
-      : 'Мастер назовёт цену со скидкой 20% после осмотра';
+      ? `На первый заказ со скидкой 20%: <strong>${price}</strong>`
+      : 'Мастер назовёт цену со скидкой 20% на первый заказ после осмотра';
   }
   sel?.addEventListener('change', updateTotal);
   updateTotal();
